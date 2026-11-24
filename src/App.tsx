@@ -15,6 +15,7 @@ export default function App() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
   const [busy, setBusy] = useState(false)
   const [notice, setNotice] = useState('')
   const [error, setError] = useState('')
@@ -132,7 +133,7 @@ export default function App() {
               <button className="visibility-button" type="button" onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? 'Hide password' : 'Show password'}>{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}</button>
             </div>}
           </>}
-          {mode === 'login' && <div className="form-utility"><span /> <button type="button" className="text-button" onClick={() => changeMode('forgot')}>Forgot password?</button></div>}
+          {mode === 'login' && <div className="form-utility"><label className="remember"><input type="checkbox" checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} /> Remember me</label><button type="button" className="text-button" onClick={() => changeMode('forgot')}>Forgot password?</button></div>}
           <button className="primary-button" disabled={busy}>{busy ? 'Please wait…' : mode === 'signup' ? 'Create Account' : mode === 'forgot' ? 'Send Reset Link' : 'Sign In'} <ArrowRight size={20} /></button>
         </form>
 
