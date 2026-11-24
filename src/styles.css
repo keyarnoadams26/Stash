@@ -45,3 +45,55 @@
  .auth-decoration.bottom{left:-360px;bottom:-184px}
  .auth-decoration.bottom:after{left:12px;width:390px;height:165px}
 }
+
+
+/* STASH auth: full-screen reference layout (no floating login card) */
+.auth-shell{min-height:100svh;display:block;position:relative;overflow:hidden;background:#f7f7f8;padding:0 0 30px}
+.auth-decoration.top{width:520px;height:300px;right:-230px;top:-215px;background:#e9eaee;transform:rotate(43deg);border-radius:48%}
+.auth-decoration.bottom{width:120%;height:190px;left:-8%;bottom:-105px;background:#e7e8ec;transform:rotate(8deg);border-radius:50%}
+.auth-decoration.bottom:after{width:390px;height:165px;left:-35px;bottom:-22px;background:#061d36;transform:rotate(14deg);border-radius:50%}
+.auth-card{position:relative;z-index:1;width:min(100%,470px);margin:0 auto;padding:92px 0 55px;border:0;border-radius:0;background:transparent;box-shadow:none}
+.auth-brand{text-align:center;margin:0 0 55px;padding:0}
+.auth-brand .wordmark{font-family:'Manrope',sans-serif;font-size:78px;font-weight:800;letter-spacing:-6px;line-height:1;color:#050607}
+.auth-brand p{font:500 18px Manrope,sans-serif;margin:8px 0 0;color:#293447}
+.auth-content{width:100%}
+.auth-content h1{font:800 34px/1.12 Manrope,sans-serif;letter-spacing:-1.5px;margin:0 0 8px;color:#050607}
+.auth-subtitle{font:500 18px Manrope,sans-serif;color:#263347;margin:0 0 30px}
+.auth-form{display:grid;gap:13px}
+.field{height:62px;border:1.5px solid #d7d9df;border-radius:21px;padding:0 18px;gap:16px;background:rgba(255,255,255,.18)}
+.field:focus-within{border-color:#aeb5c0;box-shadow:none}
+.field svg{width:23px;height:23px;color:#05080c;stroke-width:2.4}
+.field input{font-size:17px;color:#17191d}
+.field input::placeholder{color:#62646a;opacity:1}
+.visibility svg{width:21px;height:21px}
+.form-utility{font-size:15px;margin:3px 2px 8px}
+.form-utility input{width:20px;height:20px}
+.auth-submit{height:65px;border-radius:36px;font-size:19px;margin-top:0;background:#061d36}
+.or-divider{margin:24px 0 19px;font-size:16px;color:#101216}
+.google-button{height:64px;border-radius:36px;border:1.7px solid #111;font-size:17px;background:transparent}
+.google-g{font:900 25px Arial,sans-serif;background:conic-gradient(from -45deg,#4285f4 0 25%,#34a853 25% 48%,#fbbc05 48% 70%,#ea4335 70% 86%,#4285f4 86%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.auth-switch{font-size:15px;margin:35px 0 0;color:#263347}
+.auth-switch .text-button{font-size:15px}
+@media(max-width:700px){
+ .auth-shell{min-height:100svh;padding:0 0 24px;display:block}
+ .auth-card{width:100%;max-width:430px;padding:clamp(78px,12vh,112px) 26px 52px;margin:0 auto}
+ .auth-brand{margin:0 0 clamp(42px,7vh,62px)}
+ .auth-brand .wordmark{font-size:clamp(64px,18vw,76px);letter-spacing:-5px}
+ .auth-brand p{font-size:17px}
+ .auth-content h1{font-size:32px}
+ .auth-subtitle{font-size:17px;margin-bottom:28px}
+ .field{height:61px;border-radius:20px}
+ .field input{font-size:16px}
+ .auth-submit{height:62px;font-size:18px}
+ .google-button{height:61px;font-size:16px}
+ .auth-switch{margin-top:34px;font-size:14px;white-space:nowrap}
+ .auth-switch .text-button{font-size:14px}
+ .auth-decoration.bottom{width:140%;left:-20%;bottom:-116px;height:180px}
+ .auth-decoration.bottom:after{left:-5px;width:300px;height:145px}
+}
+@media(max-height:760px) and (max-width:700px){
+ .auth-card{padding-top:42px}
+ .auth-brand{margin-bottom:30px}
+ .auth-subtitle{margin-bottom:18px}
+ .auth-switch{margin-top:22px}
+}
