@@ -1,175 +1,45 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
 import type { Session } from '@supabase/supabase-js'
-import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail, UserRound, Check, Wallet, CreditCard, CalendarDays, Bell, LogOut } from 'lucide-react'
+import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail, UserRound, Check, Wallet, CreditCard, CalendarDays, Bell, LogOut, Home, Layers, ChartNoAxesColumnIncreasing, Search, Plus, ChevronRight, Settings, SlidersHorizontal, Moon, CircleHelp, X, Clock, Menu } from 'lucide-react'
 import { isSupabaseConfigured, supabase } from './lib/supabase'
 
 type Mode = 'login' | 'signup' | 'forgot'
+type Tab = 'Home' | 'Subs' | 'Payments' | 'Insights' | 'Profile' | 'Notifications' | 'Settings'
+type Subscription = { id:string; user_id:string; name:string; price:number; currency:string; payment_date:string; status:'active'|'cancelled'; created_at:string }
+const today = () => new Date().toISOString().slice(0,10)
+const money = (n:number,c='ZAR') => new Intl.NumberFormat(undefined,{style:'currency',currency:c}).format(n)
+const dateLabel = (d:string) => new Date(d+'T12:00:00').toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})
 
 export default function App() {
-  const [session, setSession] = useState<Session | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [mode, setMode] = useState<Mode>('login')
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
-  const [busy, setBusy] = useState(false)
-  const [notice, setNotice] = useState('')
-  const [error, setError] = useState('')
-
-  useEffect(() => {
-    if (!supabase) { setLoading(false); return }
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session)
-      setLoading(false)
-    })
-    const { data } = supabase.auth.onAuthStateChange((_event, next) => setSession(next))
-    return () => data.subscription.unsubscribe()
-  }, [])
-
-  function changeMode(next: Mode) {
-    setMode(next)
-    setError('')
-    setNotice('')
-    setPassword('')
-    setConfirmPassword('')
-  }
-
-  async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    if (!supabase) return
-    setBusy(true)
-    setError('')
-    setNotice('')
-    try {
-      if (mode === 'signup') {
-        if (password !== confirmPassword) throw new Error('Your passwords do not match.')
-        const { error } = await supabase.auth.signUp({
-          email: email.trim(),
-          password,
-          options: { data: { full_name: name.trim() } },
-        })
-        if (error) throw error
-        setNotice('Your account has been created. Check your email to verify your address.')
-        changeMode('login')
-        setNotice('Your account has been created. Check your email to verify your address.')
-      } else if (mode === 'login') {
-        const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password })
-        if (error) throw error
-      } else {
-        const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-          redirectTo: window.location.origin,
-        })
-        if (error) throw error
-        setNotice('If an account exists for that email, a password reset link has been sent.')
-      }
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.')
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  async function googleSignIn() {
-    if (!supabase) return
-    setBusy(true)
-    setError('')
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: window.location.origin },
-    })
-    if (error) {
-      setError(error.message)
-      setBusy(false)
-    }
-  }
-
-  if (loading) return <main className="center"><div className="spinner" />Loading STASH…</main>
-
-  if (!isSupabaseConfigured) return <main className="center"><section className="setup">
-    <div className="wordmark">Stash</div><p className="eyebrow">INITIAL SETUP</p>
-    <h1>Connect STASH to Supabase</h1>
-    <p>Add your Supabase project URL and publishable key to a local <code>.env.local</code> file to activate accounts.</p>
-    <small>Never put your service-role key in the browser or GitHub.</small>
-  </section></main>
-
-  if (!session) return <main className="auth-shell">
-    <div className="auth-decoration auth-decoration-top" />
-    <div className="auth-decoration auth-decoration-bottom" />
-    <section className="auth-card">
-      <header className="auth-brand">
-        <div className="wordmark">Stash</div>
-        <p>Your money. Organised.</p>
-      </header>
-
-      <div className="auth-content">
-        <h1>{mode === 'signup' ? 'Create your account' : mode === 'forgot' ? 'Reset your password' : 'Welcome back'}</h1>
-        <p className="auth-subtitle">{mode === 'signup' ? 'Get started in seconds' : mode === 'forgot' ? 'We’ll send you a password reset link' : 'Sign in to continue'}</p>
-
-        {notice && <div className="notice"><Check size={16} />{notice}</div>}
-        {error && <div className="error" role="alert">{error}</div>}
-
-        <form className="auth-form" onSubmit={submit}>
-          {mode === 'signup' && <div className="field">
-            <UserRound size={21} />
-            <input required value={name} onChange={e => setName(e.target.value)} placeholder="Full Name" autoComplete="name" aria-label="Full name" />
-          </div>}
-          <div className="field">
-            <Mail size={21} />
-            <input required type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email address" autoComplete="email" aria-label="Email address" />
-          </div>
-          {mode !== 'forgot' && <>
-            <div className="field">
-              <LockKeyhole size={21} />
-              <input required minLength={8} type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} aria-label="Password" />
-              <button className="visibility-button" type="button" onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? 'Hide password' : 'Show password'}>{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}</button>
-            </div>
-            {mode === 'signup' && <div className="field">
-              <LockKeyhole size={21} />
-              <input required minLength={8} type={showPassword ? 'text' : 'password'} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirm Password" autoComplete="new-password" aria-label="Confirm password" />
-              <button className="visibility-button" type="button" onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? 'Hide password' : 'Show password'}>{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}</button>
-            </div>}
-          </>}
-          {mode === 'login' && <div className="form-utility"><label className="remember"><input type="checkbox" checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} /> Remember me</label><button type="button" className="text-button" onClick={() => changeMode('forgot')}>Forgot password?</button></div>}
-          <button className="primary-button" disabled={busy}>{busy ? 'Please wait…' : mode === 'signup' ? 'Create Account' : mode === 'forgot' ? 'Send Reset Link' : 'Sign In'} <ArrowRight size={20} /></button>
-        </form>
-
-        {mode !== 'forgot' && <>
-          <div className="or-divider"><span />or<span /></div>
-          <button className="google-button" type="button" onClick={googleSignIn} disabled={busy}><span className="google-g">G</span>Continue with Google</button>
-        </>}
-
-        <p className="auth-switch">
-          {mode === 'signup' ? 'Already have an account?' : mode === 'forgot' ? 'Remembered your password?' : 'Don’t have an account?'}
-          {' '}<button className="text-button" onClick={() => changeMode(mode === 'login' ? 'signup' : 'login')}>{mode === 'login' ? 'Sign Up' : 'Sign In'}</button>
-        </p>
-      </div>
-    </section>
-  </main>
-
-  const displayName = session.user.user_metadata.full_name || 'there'
-  return <main className="app">
-    <aside className="sidebar">
-      <div className="wordmark">Stash</div>
-      <p className="nav-title">WORKSPACE</p>
-      <div className="nav active"><Wallet size={18} />Overview</div>
-      <div className="nav"><CreditCard size={18} />Subscriptions <small>SOON</small></div>
-      <div className="nav"><CalendarDays size={18} />Payments <small>SOON</small></div>
-      <div className="nav"><Bell size={18} />Reminders <small>SOON</small></div>
-      <div className="profile"><div className="avatar">{displayName[0].toUpperCase()}</div><div><b>{displayName}</b><small>{session.user.email}</small></div><button className="logout" onClick={() => supabase?.auth.signOut()} aria-label="Sign out"><LogOut size={17} /></button></div>
-    </aside>
-    <section className="dashboard">
-      <header><div><p className="eyebrow">PERSONAL WORKSPACE</p><h1>Overview</h1></div></header>
-      <section className="welcome"><div><p className="eyebrow">YOUR STASH</p><h2>Welcome, {displayName.split(' ')[0]}.</h2><p>Your personal subscription dashboard is ready.</p></div><Wallet size={28} /></section>
-      <div className="stats">
-        <article><CreditCard /><p>Active subscriptions</p><strong>—</strong><small>Coming in the next phase</small></article>
-        <article><CalendarDays /><p>Next payment</p><strong>—</strong><small>Upcoming payments will show here</small></article>
-        <article><Bell /><p>Monthly total</p><strong>—</strong><small>Your recurring spend at a glance</small></article>
-      </div>
-      <section className="empty"><div className="empty-icon"><CreditCard /></div><h3>Your subscriptions will live here</h3><p>Track services, payment dates and spending in one place. Subscription tracking is the next phase.</p></section>
-    </section>
-  </main>
+ const [session,setSession]=useState<Session|null>(null),[loading,setLoading]=useState(true)
+ const [mode,setMode]=useState<Mode>('login'),[name,setName]=useState(''),[email,setEmail]=useState(''),[password,setPassword]=useState(''),[confirm,setConfirm]=useState(''),[show,setShow]=useState(false),[remember,setRemember]=useState(true)
+ const [busy,setBusy]=useState(false),[notice,setNotice]=useState(''),[error,setError]=useState('')
+ const [tab,setTab]=useState<Tab>('Home'),[items,setItems]=useState<Subscription[]>([]),[filter,setFilter]=useState<'All'|'Active'|'Cancelled'>('All'),[query,setQuery]=useState(''),[modal,setModal]=useState(false)
+ const [subName,setSubName]=useState(''),[price,setPrice]=useState(''),[currency,setCurrency]=useState('ZAR'),[paymentDate,setPaymentDate]=useState(today())
+ const [reminders,setReminders]=useState([true,true,false,false])
+ useEffect(()=>{if(!supabase){setLoading(false);return} supabase.auth.getSession().then(({data})=>{setSession(data.session);setLoading(false)});const {data}=supabase.auth.onAuthStateChange((_e,s)=>setSession(s));return()=>data.subscription.unsubscribe()},[])
+ useEffect(()=>{if(session) void loadItems()},[session])
+ async function loadItems(){if(!supabase)return;const {data,error}=await supabase.from('subscriptions').select('*').order('payment_date',{ascending:true});if(error)setError(error.message);else setItems((data||[]) as Subscription[])}
+ function changeMode(m:Mode){setMode(m);setError('');setNotice('');setPassword('');setConfirm('')}
+ async function authSubmit(e:FormEvent){e.preventDefault();if(!supabase)return;setBusy(true);setError('');setNotice('');try{if(mode==='signup'){if(password!==confirm)throw new Error('Your passwords do not match.');const {error}=await supabase.auth.signUp({email:email.trim(),password,options:{data:{full_name:name.trim()}}});if(error)throw error;setMode('login');setNotice('Account created. Check your email if verification is required.')}else if(mode==='login'){const {error}=await supabase.auth.signInWithPassword({email:email.trim(),password});if(error)throw error}else{const {error}=await supabase.auth.resetPasswordForEmail(email.trim(),{redirectTo:window.location.origin});if(error)throw error;setNotice('If an account exists, a reset link has been sent.')}}catch(e){setError(e instanceof Error?e.message:'Something went wrong.')}finally{setBusy(false)}}
+ async function google(){if(!supabase)return;setBusy(true);const {error}=await supabase.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin}});if(error){setError(error.message);setBusy(false)}}
+ async function addSub(e:FormEvent){e.preventDefault();if(!supabase||!session)return;setBusy(true);setError('');const {data,error}=await supabase.from('subscriptions').insert({user_id:session.user.id,name:subName.trim(),price:Number(price),currency,payment_date:paymentDate,status:'active'}).select().single();setBusy(false);if(error){setError(error.message);return}setItems(old=>[...old,data as Subscription].sort((a,b)=>a.payment_date.localeCompare(b.payment_date)));setModal(false);setSubName('');setPrice('');setPaymentDate(today());setTab('Subs')}
+ async function toggleStatus(s:Subscription){if(!supabase)return;const status=s.status==='active'?'cancelled':'active';const {error}=await supabase.from('subscriptions').update({status}).eq('id',s.id);if(error)setError(error.message);else setItems(old=>old.map(x=>x.id===s.id?{...x,status}:x))}
+ const active=items.filter(x=>x.status==='active'),upcoming=active.filter(x=>x.payment_date>=today()),total=active.reduce((n,x)=>n+Number(x.price),0),currencyDisplay=active[0]?.currency||'ZAR'
+ const displayName=session?.user.user_metadata.full_name||session?.user.email?.split('@')[0]||'there'
+ const nav:{label:Tab;icon:typeof Home}[]=[{label:'Home',icon:Home},{label:'Subs',icon:Layers},{label:'Payments',icon:CreditCard},{label:'Insights',icon:ChartNoAxesColumnIncreasing},{label:'Profile',icon:UserRound}]
+ const rows=(list:Subscription[])=>list.length?<div className="subscription-list">{list.map(s=><article className="subscription-row" key={s.id}><div className="service-icon">{s.name.slice(0,1).toUpperCase()}</div><div className="subscription-info"><b>{s.name}</b><small>{s.status==='active'?'Next payment: ':'Cancelled · '}{dateLabel(s.payment_date)}</small></div><strong>{money(Number(s.price),s.currency)}</strong><button className="row-arrow" title={s.status==='active'?'Cancel subscription':'Reactivate subscription'} onClick={()=>toggleStatus(s)}><ChevronRight size={18}/></button></article>)}</div>:<div className="empty-state"><div className="empty-icon"><CreditCard/></div><h3>No subscriptions yet</h3><p>Add your first subscription to start tracking recurring payments.</p><button className="primary" onClick={()=>setModal(true)}><Plus size={17}/> Add Subscription</button></div>
+ if(loading)return <main className="center">Loading STASH…</main>
+ if(!isSupabaseConfigured)return <main className="center"><section className="setup"><div className="wordmark">Stash</div><p className="eyebrow">INITIAL SETUP</p><h1>Connect STASH to Supabase</h1><p>Add your Supabase project URL and publishable key to your Vercel environment variables.</p></section></main>
+ if(!session)return <main className="auth-shell"><div className="auth-decoration top"/><div className="auth-decoration bottom"/><section className="auth-card"><header className="auth-brand"><div className="wordmark">Stash</div><p>Your money. Organised.</p></header><div className="auth-content"><h1>{mode==='signup'?'Create your account':mode==='forgot'?'Reset your password':'Welcome back'}</h1><p className="auth-subtitle">{mode==='signup'?'Get started in seconds':mode==='forgot'?'We’ll send you a password reset link':'Sign in to continue'}</p>{notice&&<div className="notice"><Check size={16}/>{notice}</div>}{error&&<div className="error">{error}</div>}<form className="auth-form" onSubmit={authSubmit}>{mode==='signup'&&<div className="field"><UserRound/><input required maxLength={100} value={name} onChange={e=>setName(e.target.value)} placeholder="Full Name"/></div>}<div className="field"><Mail/><input required type="email" maxLength={320} value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email address" autoComplete="email"/></div>{mode!=='forgot'&&<><div className="field"><LockKeyhole/><input required minLength={8} type={show?'text':'password'} value={password} onChange={e=>setPassword(e.target.value)} placeholder="Password"/><button type="button" className="visibility" onClick={()=>setShow(!show)}>{show?<EyeOff/>:<Eye/>}</button></div>{mode==='signup'&&<div className="field"><LockKeyhole/><input required minLength={8} type={show?'text':'password'} value={confirm} onChange={e=>setConfirm(e.target.value)} placeholder="Confirm Password"/></div>}</>}{mode==='login'&&<div className="form-utility"><label><input type="checkbox" checked={remember} onChange={e=>setRemember(e.target.checked)}/> Remember me</label><button type="button" className="text-button" onClick={()=>changeMode('forgot')}>Forgot password?</button></div>}<button className="primary auth-submit" disabled={busy}>{busy?'Please wait…':mode==='signup'?'Create Account':mode==='forgot'?'Send Reset Link':'Sign In'} <ArrowRight size={20}/></button></form>{mode!=='forgot'&&<><div className="or-divider"><span/>or<span/></div><button className="google-button" onClick={google} disabled={busy}><b className="google-g">G</b>Continue with Google</button></>}<p className="auth-switch">{mode==='signup'?'Already have an account?':mode==='forgot'?'Remembered your password?':"Don’t have an account?"} <button className="text-button" onClick={()=>changeMode(mode==='login'?'signup':'login')}>{mode==='login'?'Sign Up':'Sign In'}</button></p></div></section></main>
+ return <main className="app-shell"><header className="mobile-header"><span className="wordmark">Stash</span><button className="icon-button" onClick={()=>setTab('Notifications')}><Bell/></button></header><aside className="sidebar"><div className="wordmark">Stash</div><p className="eyebrow">PERSONAL WORKSPACE</p>{nav.map(n=><button key={n.label} className={'nav-item '+(tab===n.label?'selected':'')} onClick={()=>setTab(n.label)}><n.icon size={19}/>{n.label}</button>)}<button className="nav-item" onClick={()=>setTab('Notifications')}><Bell size={19}/>Notifications</button><button className="nav-item" onClick={()=>setTab('Settings')}><Settings size={19}/>Settings</button><div className="sidebar-user"><div className="avatar">{displayName[0].toUpperCase()}</div><div><b>{displayName}</b><small>{session.user.email}</small></div><button className="icon-button" onClick={()=>supabase?.auth.signOut()}><LogOut size={17}/></button></div></aside><section className="main-content"><header className="page-header"><div>{tab==='Home'?<><h1>Good evening,</h1><p>Keep track of your subscriptions.</p></>:<h1>{tab==='Subs'?'Subscriptions':tab==='Insights'?'Stash Insights':tab}</h1>}</div>{tab==='Subs'&&<button className="primary desktop-add" onClick={()=>setModal(true)}><Plus size={17}/> Add Subscription</button>}{tab==='Subs'&&<Search className="search-top"/>}</header>{error&&<p className="error">{error}</p>}
+ {tab==='Home'&&<><section className="spending-card"><div><small>Total Monthly Spending</small><strong>{money(total,currencyDisplay)}</strong><span>↗ {active.length} active subscriptions</span></div><ChartNoAxesColumnIncreasing size={55}/></section><div className="summary-grid"><article className="summary-card"><CalendarDays/><small>Active Subscriptions</small><strong>{active.length}</strong></article><article className="summary-card"><Clock/><small>Upcoming Payments</small><strong>{upcoming.length}</strong></article></div><div className="section-heading"><h2>Upcoming Payments</h2><button onClick={()=>setTab('Payments')}>See all <ArrowRight size={15}/></button></div>{rows(upcoming.slice(0,4))}</>}
+ {tab==='Subs'&&<><div className="toolbar"><div className="search-field"><Search size={17}/><input placeholder="Search subscriptions" value={query} onChange={e=>setQuery(e.target.value)}/></div><div className="filter-pills">{(['All','Active','Cancelled'] as const).map(f=><button key={f} className={filter===f?'chosen':''} onClick={()=>setFilter(f)}>{f} ({f==='All'?items.length:f==='Active'?active.length:items.length-active.length})</button>)}</div></div>{rows(items.filter(s=>(filter==='All'||s.status===filter.toLowerCase())&&s.name.toLowerCase().includes(query.toLowerCase())))}<button className="primary mobile-add" onClick={()=>setModal(true)}><Plus size={17}/> Add Subscription</button></>}
+ {tab==='Payments'&&<><h2 className="section-title">Upcoming Payment</h2>{rows(upcoming)}<h2 className="section-title">Payment History</h2><p className="muted">Payment history will appear here when payments are recorded.</p></>}
+ {tab==='Insights'&&<><section className="spending-card"><div><small>Total Spending</small><strong>{money(total,currencyDisplay)}</strong><span>Monthly recurring total</span></div><ChartNoAxesColumnIncreasing size={55}/></section><h2 className="section-title">Spending by Subscription</h2>{rows(active)}<div className="tip-card">💡 Review subscriptions you no longer use to keep spending under control.</div></>}
+ {tab==='Notifications'&&<div className="notification-page"><div className="bell-circle"><Bell size={42}/></div><h2>Stay Informed</h2><p>Get notified about upcoming payments and more.</p>{['Payment Reminders','Payment Failures','New Features & Updates','Promotions'].map((v,i)=><div className="toggle-row" key={v}><span>{v}</span><button className={'toggle '+(reminders[i]?'on':'')} onClick={()=>setReminders(old=>old.map((x,j)=>i===j?!x:x))}/></div>)}</div>}
+ {tab==='Profile'&&<div className="profile-page"><div className="profile-avatar"><UserRound size={45}/></div><h2>{displayName}</h2><p>{session.user.email}</p>{[['Account Details',UserRound],['Subscription History',Layers],['Payment Methods',CreditCard],['Settings',Settings],['Help & Support',CircleHelp]].map(([label,Icon])=><button className="setting-row" key={label as string} onClick={()=>setTab(label==='Subscription History'?'Subs':label==='Settings'?'Settings':'Profile')}><Icon size={19}/>{label as string}<ChevronRight size={18}/></button>)}<button className="primary signout" onClick={()=>supabase?.auth.signOut()}><LogOut size={17}/> Sign Out</button></div>}
+ {tab==='Settings'&&<div className="settings-page"><h3>Account</h3><div className="setting-row"><UserRound/> Edit Profile <ChevronRight/></div><div className="setting-row"><LockKeyhole/> Change Password <ChevronRight/></div><div className="setting-row"><Mail/> Email Preferences <ChevronRight/></div><h3>App</h3><div className="setting-row"><Moon/> Appearance <span>Light</span><ChevronRight/></div><div className="setting-row"><SlidersHorizontal/> Currency <span>{currency}</span><ChevronRight/></div><div className="setting-row"><CircleHelp/> Help & Support <ChevronRight/></div><h3>Legal</h3><div className="setting-row">Terms of Service <ChevronRight/></div><div className="setting-row">Privacy Policy <ChevronRight/></div></div>}
+ </section><nav className="bottom-nav">{nav.map(n=><button key={n.label} className={tab===n.label?'active':''} onClick={()=>setTab(n.label)}><n.icon size={20}/><small>{n.label}</small></button>)}</nav>{modal&&<div className="modal-backdrop" onClick={()=>setModal(false)}><section className="modal" onClick={e=>e.stopPropagation()}><header><h2>Add Subscription</h2><button className="icon-button" onClick={()=>setModal(false)}><X/></button></header><div className="modal-intro"><div className="plus-circle"><Plus size={32}/></div><h3>Add a Subscription</h3><p>Enter the details below.</p></div>{error&&<p className="error">{error}</p>}<form className="auth-form" onSubmit={addSub}><input required maxLength={100} placeholder="Subscription Name" value={subName} onChange={e=>setSubName(e.target.value)}/><label className="date-field">Payment Date<input required type="date" value={paymentDate} onChange={e=>setPaymentDate(e.target.value)}/></label><div className="price-field"><input required type="number" min="0.01" step="0.01" placeholder="Monthly Price" value={price} onChange={e=>setPrice(e.target.value)}/><select value={currency} onChange={e=>setCurrency(e.target.value)}><option>ZAR</option><option>USD</option><option>GBP</option><option>EUR</option></select></div><button className="primary" disabled={busy}>{busy?'Saving…':'Add Subscription'}</button></form></section></div>}</main>
 }
