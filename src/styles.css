@@ -403,3 +403,67 @@ button{font-weight:700}
  .bottom-nav small{font-size:9px;font-weight:900}
  .welcome-content h1{font-size:clamp(38px,10vw,52px)}
 }
+
+
+/* STASH Insights — premium dark analytics cards inspired by the reference */
+.insights-dashboard{gap:18px}
+.insights-dashboard .spending-card{
+ background:radial-gradient(ellipse at 88% 8%,#294d6b 0,transparent 35%),linear-gradient(125deg,#07111f 0%,#101b2a 58%,#172a3e 100%);
+ color:#fff;border:1px solid #24384d;border-left:4px solid #8ba9c9;box-shadow:0 18px 38px #071d3424;min-height:165px
+}
+.insights-dashboard .spending-card small{color:#c1cedb;font-weight:800}
+.insights-dashboard .spending-card strong{color:#fff;font-size:35px}
+.insights-dashboard .spending-card span{background:#193d35;color:#8ee0bd}
+.insights-dashboard .spending-card>svg{background:#ffffff14;color:#dceaff;border:1px solid #ffffff20}
+.insights-dashboard .analytics-stat{
+ position:relative;overflow:hidden;min-height:116px;padding:20px;border:1px solid #253246;border-radius:20px;
+ background:linear-gradient(145deg,#111b29,#080e18);box-shadow:0 13px 28px #071d3420
+}
+.insights-dashboard .analytics-stat:after{content:"";position:absolute;width:100px;height:100px;right:-25px;bottom:-50px;border-radius:50%;background:radial-gradient(circle,#527ca355,transparent 70%)}
+.insights-dashboard .analytics-stat small{color:#aebdce;font-weight:800}
+.insights-dashboard .analytics-stat strong{color:#fff;font-size:25px;font-weight:900}
+.insights-dashboard .analytics-stat span{color:#8495a9;font-weight:600}
+.insights-dashboard .chart-card{
+ position:relative;overflow:hidden;padding:22px;border:1px solid #273345!important;border-radius:22px!important;
+ background:linear-gradient(145deg,#151a22 0%,#0d121b 100%)!important;color:#f6f8fb;
+ box-shadow:0 15px 34px #07111f20!important
+}
+.insights-dashboard .chart-card:before{content:"";position:absolute;pointer-events:none;width:220px;height:220px;right:-100px;top:-145px;border-radius:50%;background:radial-gradient(circle,#294c7040,transparent 70%)}
+.insights-dashboard .chart-card>*{position:relative;z-index:1}
+.insights-dashboard .chart-heading h2{color:#f6f8fb!important;font-size:17px;font-weight:900!important}
+.insights-dashboard .chart-heading p{color:#9aa9ba;font-size:12px;font-weight:600}
+.insights-dashboard .chart-unit{color:#a8bdd4;background:#24374c;padding:7px 10px;border-radius:20px}
+.insights-dashboard .bar-chart{height:220px;gap:clamp(8px,2.5vw,19px);background:linear-gradient(180deg,#ffffff00 0%,#ffffff00 24%,#ffffff08 25%,#ffffff00 26%,#ffffff08 50%,#ffffff00 51%,#ffffff08 75%,#ffffff00 76%);border-radius:14px}
+.insights-dashboard .bar-column>strong{color:#dce5ef;font-size:10px;font-weight:800}
+.insights-dashboard .bar-track{height:150px;width:min(100%,38px);background:#080d15;border:1px solid #ffffff0c;border-radius:12px 12px 5px 5px;box-shadow:inset 0 5px 15px #0008}
+.insights-dashboard .bar-fill{border-radius:11px 11px 4px 4px;background:linear-gradient(180deg,#75e6c2 0%,#60a9e9 52%,#a67ae9 100%)!important;box-shadow:0 0 20px #69bfe755}
+.insights-dashboard .upcoming-fill{background:linear-gradient(180deg,#f6c45c,#f18b8b)!important;box-shadow:0 0 18px #f2b76c55}
+.insights-dashboard .bar-column>small{color:#a5b2c2;font-weight:700}
+.insights-dashboard .pie-chart{box-shadow:0 0 35px #7b9fe02a,inset 0 0 0 1px #ffffff24}
+.insights-dashboard .pie-hole{background:#111a26;box-shadow:0 4px 18px #0008;border:1px solid #ffffff18}
+.insights-dashboard .pie-hole strong{color:#fff;font-weight:900}
+.insights-dashboard .pie-hole small{color:#a7b5c5}
+.insights-dashboard .pie-legend-row{color:#b7c3d1;font-size:11px}
+.insights-dashboard .pie-legend-row b,.insights-dashboard .pie-legend-row strong{color:#f2f5f9;font-weight:800}
+.insights-dashboard .chart-footnote{color:#8d9caf;font-weight:600}
+.insights-dashboard .savings-empty{min-height:170px;border-radius:17px;background:radial-gradient(ellipse at 25% 80%,#2b8d8050,transparent 42%),radial-gradient(ellipse at 80% 15%,#8c62bd40,transparent 40%),#0a111b;border:1px solid #26364a}
+.insights-dashboard .savings-empty svg{width:48px;height:48px;padding:12px;border-radius:16px;color:#a8f0d4;background:linear-gradient(135deg,#215e5a,#3a3b75);box-shadow:0 8px 25px #4b9f9b40}
+.insights-dashboard .savings-empty b{color:#fff;font-size:14px;font-weight:900}
+.insights-dashboard .savings-empty span{color:#aebdcd;font-size:11px;font-weight:600}
+.insights-dashboard .tip-card{color:#eaf1f8;background:linear-gradient(110deg,#152b40,#17202c);border:1px solid #2b4056}
+.insights-dashboard .feature-panel{background:linear-gradient(145deg,#141c28,#0c121c)!important;border-color:#27384b!important;color:#fff}
+.insights-dashboard .feature-panel p{color:#b0bdcc}
+.insights-dashboard .feature-panel-title{color:#fff;font-weight:900}
+.insights-dashboard .coming-soon{color:#9ab5d1}
+.insights-dashboard .locked-panel{background:linear-gradient(120deg,#14263a,#0c1420)!important;border-color:#2a4057!important;color:#fff}
+.insights-dashboard .locked-panel p{color:#b0bdcc}
+@media(max-width:700px){
+ .insights-dashboard{gap:14px}
+ .insights-dashboard .spending-card{min-height:145px;padding:20px}
+ .insights-dashboard .spending-card strong{font-size:29px}
+ .insights-dashboard .analytics-stat{padding:16px;min-height:108px}
+ .insights-dashboard .analytics-stat strong{font-size:21px}
+ .insights-dashboard .chart-card{padding:18px}
+ .insights-dashboard .bar-chart{height:190px;gap:6px}
+ .insights-dashboard .bar-track{height:128px;width:min(100%,30px)}
+}
