@@ -467,3 +467,58 @@ button{font-weight:700}
  .insights-dashboard .bar-chart{height:190px;gap:6px}
  .insights-dashboard .bar-track{height:128px;width:min(100%,30px)}
 }
+
+
+/* STASH signature background gradient */
+:root{
+ background:#f3f5f8;
+ --stash-navy:#102a45;
+ --stash-blue:#426487;
+}
+html{background:#f3f5f8}
+body{
+ background:
+  radial-gradient(ellipse at 8% 3%,rgba(111,145,180,.18) 0%,transparent 34%),
+  radial-gradient(ellipse at 92% 18%,rgba(35,68,104,.12) 0%,transparent 31%),
+  radial-gradient(ellipse at 55% 100%,rgba(159,176,198,.20) 0%,transparent 38%),
+  linear-gradient(135deg,#f8f9fb 0%,#edf1f6 48%,#f5f6f9 100%);
+ background-attachment:fixed;
+}
+.app-shell{
+ background:
+  radial-gradient(ellipse at 82% 5%,rgba(81,117,154,.13) 0%,transparent 32%),
+  radial-gradient(ellipse at 14% 90%,rgba(166,184,205,.17) 0%,transparent 38%),
+  linear-gradient(135deg,#f7f8fa 0%,#edf1f6 52%,#f6f7f9 100%);
+}
+.main-content{background:transparent}
+.sidebar{
+ background:rgba(255,255,255,.82);
+ backdrop-filter:blur(18px);
+ border-right:1px solid rgba(206,216,228,.75);
+}
+.mobile-header{
+ background:rgba(255,255,255,.88);
+ backdrop-filter:blur(18px);
+}
+.auth-shell{
+ background:
+  radial-gradient(ellipse at 18% 18%,rgba(110,145,181,.26),transparent 36%),
+  radial-gradient(ellipse at 85% 78%,rgba(28,61,94,.17),transparent 38%),
+  linear-gradient(135deg,#f9fafc 0%,#e9eef4 52%,#f5f6f9 100%);
+}
+.welcome-shell{
+ background:
+  radial-gradient(ellipse at 12% 18%,rgba(111,148,186,.22),transparent 34%),
+  radial-gradient(ellipse at 88% 72%,rgba(30,62,97,.15),transparent 36%),
+  linear-gradient(135deg,#fbfcfd 0%,#edf1f6 52%,#f7f8fa 100%);
+}
+@media(max-width:700px){
+ body,.app-shell{
+  background:
+   radial-gradient(ellipse at 95% 0%,rgba(88,126,165,.13),transparent 32%),
+   radial-gradient(ellipse at 0% 85%,rgba(169,186,207,.15),transparent 35%),
+   linear-gradient(145deg,#f8f9fb 0%,#eef2f6 55%,#f7f8fa 100%);
+  background-attachment:fixed;
+ }
+ .sidebar{background:#fff}
+}
