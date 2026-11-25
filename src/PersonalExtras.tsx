@@ -35,7 +35,7 @@ export default function PersonalExtras({subscriptions,budgets,displayCurrency,le
   const saveEmailPreference = async (enabled:boolean) => {
     setEmailEnabled(enabled)
     if(!supabase || !session || isDemo){setNotice('Sign in to save email reminder preferences.');return}
-    const {error}=await supabase.from('stash_notification_preferences').upsert({user_id:session.user.id,email_enabled:enabled,reminder_days:leadDays},{onConflict:'user_id'})
+    const {error}=await supabase.from('stash_notification_preferences').upsert({user_id:session.user.id,email_enabled:enabled,push_enabled:pushEnabled,reminder_days:leadDays,updated_at:new Date().toISOString()},{onConflict:'user_id'})
     if(error){setEmailEnabled(!enabled);setNotice(error.message)}else setNotice(enabled?'Email reminders enabled.':'Email reminders disabled.')
   }
   const enablePush = async () => {
@@ -52,7 +52,7 @@ export default function PersonalExtras({subscriptions,budgets,displayCurrency,le
       const json = subscription.toJSON()
       const {error} = await supabase.from('stash_push_subscriptions').upsert({user_id:session.user.id,endpoint:json.endpoint,p256dh:json.keys?.p256dh,auth_key:json.keys?.auth},{onConflict:'user_id,endpoint'})
       if(error) throw error
-      await supabase.from('stash_notification_preferences').upsert({user_id:session.user.id,push_enabled:true,reminder_days:leadDays},{onConflict:'user_id'})
+      await supabase.from('stash_notification_preferences').upsert({user_id:session.user.id,email_enabled:emailEnabled,push_enabled:true,reminder_days:leadDays,updated_at:new Date().toISOString()},{onConflict:'user_id'})
       setPushEnabled(true);setNotice('This device is registered for push notifications. Server-side delivery still needs its VAPID private key and scheduler.')
     } catch(error) { setNotice(error instanceof Error?error.message:'Could not enable push notifications.') }
   }
@@ -60,6 +60,22 @@ export default function PersonalExtras({subscriptions,budgets,displayCurrency,le
     if(!supabase || !session || isDemo){setNotice('Sign in to use email reminders.');return}
     setBusy(true);const {data,error}=await supabase.functions.invoke('send-reminders');setBusy(false)
     setNotice(error?error.message:(data?.sent?data.sent+' reminder email(s) sent.':'No reminders due, or email provider is not configured.'))
+  }
+  const disablePush = async () => {
+    if(!supabase || !session || isDemo) return
+    try {
+      const registration = await navigator.serviceWorker.ready
+      const subscription = await registration.pushManager.getSubscription()
+      if(subscription) {
+        const endpoint = subscription.endpoint
+        await subscription.unsubscribe()
+        const {error} = await supabase.from('stash_push_subscriptions').delete().eq('user_id',session.user.id).eq('endpoint',endpoint)
+        if(error) throw error
+      }
+      const {error} = await supabase.from('stash_notification_preferences').upsert({user_id:session.user.id,email_enabled:emailEnabled,push_enabled:false,reminder_days:leadDays,updated_at:new Date().toISOString()},{onConflict:'user_id'})
+      if(error) throw error
+      setPushEnabled(false);setNotice('Push notifications disabled on this device.')
+    } catch(error) { setNotice(error instanceof Error?error.message:'Could not disable push notifications.') }
   }
   const testBankSandbox = async () => {
     if(!supabase || !session || isDemo){setBankResult('Sign in to test the bank sandbox.');return}
@@ -143,7 +159,7 @@ export default function PersonalExtras({subscriptions,budgets,displayCurrency,le
       <p>STASH can show browser notifications for upcoming payments and trial end dates while the app is open.</p>
       <button type="button" className="primary" onClick={() => void requestNotifications()}>{permission==='granted'?'Browser notifications enabled':'Enable browser notifications'}</button>
       {notice && <p className="hub-message">{notice}</p>}
-      <label className="hub-toggle"><input type="checkbox" checked={pushEnabled} onChange={e=>{if(e.target.checked)void enablePush();else setNotice('To disable push notifications, revoke this site permission in your browser settings.')}}/> Enable background push on this device</label><label className="hub-toggle"><input type="checkbox" checked={emailEnabled} onChange={e=>void saveEmailPreference(e.target.checked)}/> Email payment and trial reminders</label><button type="button" onClick={()=>void sendEmailReminders()} disabled={busy}>Send due email reminders</button><p className="hub-footnote">Email delivery requires a Resend API key and verified sender configured securely in Supabase. The button checks reminders when pressed; automatic daily scheduling still needs setup.</p>
+      <label className="hub-toggle"><input type="checkbox" checked={pushEnabled} onChange={e=>{if(e.target.checked)void enablePush();else void disablePush()}}/> Enable background push on this device</label><label className="hub-toggle"><input type="checkbox" checked={emailEnabled} onChange={e=>void saveEmailPreference(e.target.checked)}/> Email payment and trial reminders</label><button type="button" onClick={()=>void sendEmailReminders()} disabled={busy}>Send due email reminders</button><p className="hub-footnote">Email delivery requires a Resend API key and verified sender configured securely in Supabase. The button checks reminders when pressed; automatic daily scheduling still needs setup.</p>
     </section>
     <section className="hub-card"><h3>Bank connection (sandbox)</h3><p>Test STASH's bank-data integration using synthetic sample accounts only. This does not connect a real bank account.</p><button type="button" onClick={()=>void testBankSandbox()} disabled={busy}>Test bank sandbox</button>{bankResult&&<pre className="hub-code">{bankResult}</pre>}<p className="hub-footnote">Requires a test-only Banklink key configured as a Supabase secret. Real bank connections are not enabled in this build.</p></section>
   </div>
