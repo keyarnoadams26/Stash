@@ -586,3 +586,20 @@ body{
 .insights-dashboard .locked-panel .primary{background:linear-gradient(110deg,#071d34,#183b5b)!important;color:#fff!important}
 @media(max-width:850px){.dashboard-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.dashboard-welcome{align-items:flex-start;flex-direction:column}.dashboard-welcome>.primary{width:100%;justify-content:center}.dashboard-kpis{gap:9px}.dashboard-kpi{padding:14px;border-radius:15px}.dashboard-kpi strong{font-size:20px}.home-dashboard{gap:16px}}
+
+
+/* STASH dashboard category summary and category filtering */
+.category-filter{display:flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid #e5eaf0;border-radius:12px;background:#fff;color:#68778b;font-size:11px;font-weight:800}
+.category-filter select{max-width:155px;border:0;outline:0;background:transparent;color:#173653;font:700 12px Manrope,sans-serif}
+.home-category-card{padding:20px;border:1px solid #e3eaf2;border-radius:19px;background:#fff;box-shadow:0 7px 20px #10243b08}
+.home-category-card .section-heading{margin:0 0 16px}
+.home-category-card .section-heading p{margin:4px 0 0;color:#78869a;font-size:11px}
+.home-category-row{display:grid;gap:8px;margin:13px 0}
+.home-category-meta{display:flex;align-items:center;gap:9px;font-size:12px;color:#30435b}
+.home-category-meta b{flex:1;font-weight:800}
+.home-category-meta strong{color:#10243b;font-weight:900}
+.home-category-dot{width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 3px #f0f3f7}
+.home-category-track{height:8px;border-radius:20px;background:#edf1f6;overflow:hidden}
+.home-category-track span{display:block;height:100%;min-width:3px;border-radius:20px}
+.kpi-number-green{color:#087b45!important}
+@media(max-width:600px){.category-filter{margin-top:10px;justify-content:space-between}.category-filter select{max-width:58%}.home-category-card{padding:16px}}
