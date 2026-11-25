@@ -231,3 +231,113 @@
 .recommendation-row span{font-size:13px}
 .recommendation-row small{font-size:12px;color:var(--muted,#737985)}
 .personal-extras{display:grid;gap:18px}
+
+
+/* STASH visual refresh — richer cards, hierarchy and mobile polish */
+:root{color:#101827;background:#f6f7f9}
+body{background:#f6f7f9}
+.app-shell{background:#f6f7f9}
+.sidebar{background:#fff;border-right:1px solid #e8ebf0;box-shadow:5px 0 24px #10243b08}
+.sidebar .wordmark,.mobile-header .wordmark{color:#071d34}
+.nav-item{min-height:46px;border-radius:14px;transition:background .18s,color .18s,transform .18s}
+.nav-item:hover{background:#f1f3f6;color:#071d34;transform:translateX(2px)}
+.nav-item.selected{background:#e9eef5;color:#071d34;box-shadow:inset 3px 0 #173b60}
+.main-content{max-width:1180px;padding-top:40px}
+.page-header{margin-bottom:27px}
+.page-header h1{font-size:29px;letter-spacing:-1.1px}
+.page-header p{font-size:14px;color:#727d8c}
+.spending-card{position:relative;overflow:hidden;min-height:154px;padding:28px 30px;border:1px solid #e8edf3;border-radius:24px;background:linear-gradient(115deg,#fff 0%,#f0f3f7 62%,#e7edf5 100%);box-shadow:0 12px 30px #10243b0a}
+.spending-card:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:6%;top:-105px;background:#dce5ef70}
+.spending-card>div,.spending-card>svg{position:relative;z-index:1}
+.spending-card>svg{width:62px;height:62px;padding:13px;border-radius:18px;background:#071d34;color:#fff;stroke-width:1.8}
+.spending-card small{font-size:13px;color:#586579;font-weight:600}
+.spending-card strong{font-size:32px;letter-spacing:-1.1px;color:#071d34}
+.spending-card span{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;background:#e4f2eb;color:#28724d;font-weight:700}
+.summary-grid{gap:16px;margin:18px 0 30px}
+.summary-card{position:relative;overflow:hidden;min-height:128px;padding:20px 21px;border:1px solid #e9edf2;border-radius:21px;background:#fff;box-shadow:0 8px 22px #10243b08;transition:transform .18s,box-shadow .18s}
+.summary-card:hover{transform:translateY(-2px);box-shadow:0 13px 28px #10243b10}
+.summary-card svg{width:27px;height:27px;padding:5px;border-radius:9px;background:#edf1f6;color:#173653}
+.summary-card small{font-size:12px;color:#687487;font-weight:600}
+.summary-card strong{font-size:27px;color:#071d34}
+.section-heading{margin:25px 0 12px}
+.section-heading h2,.section-title{font-size:18px;letter-spacing:-.35px}
+.section-heading button{padding:8px 12px;border-radius:20px;background:#edf1f6;color:#173653}
+.subscription-list{padding:4px 16px;border:1px solid #e9edf2;border-radius:20px;background:#fff;box-shadow:0 8px 22px #10243b07}
+.subscription-row{padding:15px 3px;border-bottom:1px solid #f0f2f5}
+.subscription-row:last-child{border-bottom:0}
+.service-icon{width:46px;height:46px;border-radius:14px;background:linear-gradient(145deg,#071d34,#254766);box-shadow:0 5px 12px #071d3420}
+.subscription-info b{font-size:14px;color:#172338}
+.subscription-info small{font-size:11px;color:#7b8594}
+.subscription-row>strong{color:#172338;font-size:13px}
+.row-arrow{width:32px;height:32px;border-radius:50%;background:#f2f4f7;display:grid;place-items:center}
+.toolbar{padding:14px;border:1px solid #e9edf2;border-radius:20px;background:#fff;box-shadow:0 8px 22px #10243b07}
+.search-field{height:46px;border-radius:14px;background:#f8f9fb;border-color:#e9edf2}
+.filter-pills button{padding:10px 15px;font-weight:600}
+.filter-pills button.chosen{background:#071d34;box-shadow:0 5px 12px #071d3425}
+.chart-card,.hub-card,.analytics-stat,.feature-panel,.locked-panel{border:1px solid #e8edf2!important;border-radius:21px!important;background:#fff!important;box-shadow:0 9px 24px #10243b08}
+.chart-card{padding:21px!important;margin:16px 0}
+.chart-heading h2{font:700 17px Manrope;margin:0 0 5px}
+.chart-heading p{color:#7b8594;font-size:12px}
+.analytics-stat{padding:19px}
+.analytics-stat strong{color:#071d34}
+.tip-card{border:1px solid #e5eaf0;border-radius:18px;background:linear-gradient(110deg,#fff,#edf2f7);padding:19px}
+.pie-chart{box-shadow:0 8px 22px #10243b18}
+.notification-page{padding:28px 26px;border:1px solid #e9edf2;border-radius:24px;background:#fff;box-shadow:0 10px 28px #10243b08}
+.bell-circle,.profile-avatar{background:linear-gradient(145deg,#e8edf4,#dce5ef);color:#102b46}
+.toggle-row{padding:17px 8px;border-bottom:1px solid #f0f2f5}
+.toggle.on{background:#071d34}
+.profile-page{padding:28px 26px;border:1px solid #e9edf2;border-radius:24px;background:#fff;box-shadow:0 10px 28px #10243b08}
+.profile-avatar{width:100px;height:100px;margin-bottom:12px}
+.profile-page h2{font-size:22px}
+.setting-row{padding:16px 9px;border-radius:12px;transition:background .15s}
+.setting-row:hover{background:#f6f8fa}
+.signout{box-shadow:0 7px 16px #071d3425}
+.bottom-nav{box-shadow:0 -7px 24px #10243b0a}
+.bottom-nav button{position:relative;min-width:58px}
+.bottom-nav button.active:before{content:"";position:absolute;top:2px;width:24px;height:3px;border-radius:5px;background:#071d34}
+.primary{background:linear-gradient(110deg,#071d34,#183b5b);box-shadow:0 7px 16px #071d3420;transition:transform .16s,box-shadow .16s}
+.primary:hover{transform:translateY(-1px);box-shadow:0 10px 22px #071d3430}
+.modal{border:1px solid #e9edf2;box-shadow:0 24px 80px #061d3638}
+.empty-state{padding:45px 18px;border:1px dashed #d8e0e9;border-radius:20px;background:#fff}
+.ad-placeholder{border:1px dashed #d9e0e8;border-radius:14px;background:#fff;color:#8993a1}
+.demo-banner{border-radius:13px}
+.welcome-shell{background:radial-gradient(ellipse at 82% 14%,#dce5ef 0,transparent 35%),linear-gradient(145deg,#fff 0%,#f5f7fa 55%,#e8edf3 100%)}
+.welcome-content{max-width:560px}
+.welcome-brand{color:#071d34}
+.welcome-brand span{color:#456887}
+.welcome-kicker{color:#52677d}
+.welcome-content h1{letter-spacing:-2.3px}
+.welcome-benefits>div{border:1px solid #e7ebf0;border-radius:16px;background:#ffffffb8;box-shadow:0 6px 18px #10243b08}
+.welcome-benefits>div>span{background:#e8edf4;color:#173653}
+.welcome-cta{box-shadow:0 10px 22px #071d3430}
+@media(max-width:700px){
+ body{background:#f6f7f9}
+ .app-shell{background:#f6f7f9}
+ .mobile-header{height:66px;background:#fff;border-bottom:1px solid #e9edf2;box-shadow:0 3px 12px #10243b05}
+ .main-content{padding:23px 17px 34px}
+ .page-header{margin-bottom:18px}
+ .page-header h1{font-size:25px}
+ .spending-card{min-height:140px;padding:20px;border-radius:21px}
+ .spending-card strong{font-size:27px}
+ .spending-card>svg{width:54px;height:54px;padding:11px}
+ .summary-grid{gap:11px;margin:14px 0 24px}
+ .summary-card{min-height:116px;padding:15px;border-radius:18px}
+ .summary-card strong{font-size:24px}
+ .subscription-list{padding:3px 12px;border-radius:18px}
+ .subscription-row{padding:13px 0}
+ .service-icon{width:42px;height:42px;border-radius:13px}
+ .toolbar{padding:11px;border-radius:17px}
+ .filter-pills{overflow-x:auto;padding-bottom:2px}
+ .filter-pills button{white-space:nowrap}
+ .notification-page,.profile-page{padding:24px 17px;border-radius:21px}
+ .bottom-nav{height:74px;background:#ffffffed;backdrop-filter:blur(18px);border-top:1px solid #e8ebf0}
+ .bottom-nav button{height:62px}
+ .bottom-nav small{font-size:9px;font-weight:600}
+ .chart-card{padding:17px!important;border-radius:18px!important}
+ .welcome-shell{padding:28px 20px 24px}
+}
+@media(min-width:701px){
+ .spending-card{margin-bottom:4px}
+ .summary-card{grid-template-columns:1fr;align-content:start}
+ .main-content{padding-left:48px;padding-right:48px}
+}
