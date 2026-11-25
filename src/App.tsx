@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import type { Session } from '@supabase/supabase-js'
-import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail, UserRound, Check, CreditCard, CalendarDays, Bell, LogOut, Home, Layers, ChartNoAxesColumnIncreasing, Search, Plus, ChevronRight, Settings, SlidersHorizontal, Moon, CircleHelp, X, Clock, Sparkles, Crown, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail, UserRound, Check, CreditCard, CalendarDays, Bell, LogOut, Home, Layers, ChartNoAxesColumnIncreasing, Search, Plus, ChevronRight, Settings, SlidersHorizontal, CircleHelp, X, Clock, Sparkles, Crown, ShieldCheck } from 'lucide-react'
 import { isSupabaseConfigured, supabase } from './lib/supabase'
 import PersonalHub from './PersonalHub'
 
