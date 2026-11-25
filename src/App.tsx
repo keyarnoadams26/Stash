@@ -41,7 +41,6 @@ export default function App() {
  const chartMonths=Array.from({length:6},(_,i)=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()+i);return {key:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`,label:d.toLocaleDateString(undefined,{month:'short'}),amount:total}})
  const maxMonthly=Math.max(1,...chartMonths.map(x=>x.amount))
  const subscriptionBars=active.slice().sort((a,b)=>Number(b.price)-Number(a.price))
- const maxSubPrice=Math.max(1,...subscriptionBars.map(x=>Number(x.price)))
  const chartColors=['#b9cce0','#c9d9cf','#d8c9e8','#efd9bd','#bfdde0','#e7c5cc','#cbd3e5','#d9d9c8']
  const pieTotal=subscriptionBars.reduce((n,x)=>n+Math.max(0,Number(x.price)),0)
  let pieCursor=0
