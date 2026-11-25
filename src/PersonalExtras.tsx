@@ -1,16 +1,41 @@
 import { useEffect, useMemo, useState } from 'react'
+import type { Session } from '@supabase/supabase-js'
+import { supabase } from './lib/supabase'
 
 type Sub = { id:string; name:string; price:number; currency:string; payment_date:string; status:'active'|'cancelled'; category?:string; frequency?:string; trial_end?:string|null }
-type Props = { subscriptions:Sub[]; budgets:Record<string,string>; displayCurrency:string; leadDays:number }
+type Props = { subscriptions:Sub[]; budgets:Record<string,string>; displayCurrency:string; leadDays:number; session:Session|null; isDemo:boolean }
 
 const monthly = (s:Sub) => Number(s.price) * ({weekly:52/12,monthly:1,quarterly:1/3,yearly:1/12}[s.frequency || 'monthly'] || 1)
 const dateText = (d:string) => new Date(d+'T12:00:00').toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})
 
-export default function PersonalExtras({subscriptions,budgets,displayCurrency,leadDays}:Props) {
+export default function PersonalExtras({subscriptions,budgets,displayCurrency,leadDays,session,isDemo}:Props) {
   const [rates,setRates] = useState<Record<string,number>>({ZAR:1})
   const [rateDate,setRateDate] = useState('')
   const [permission,setPermission] = useState(typeof Notification === 'undefined' ? 'unsupported' : Notification.permission)
   const [notice,setNotice] = useState('')
+  const [emailEnabled,setEmailEnabled] = useState(false)
+  const [bankResult,setBankResult] = useState('')
+  const [busy,setBusy] = useState(false)
+  useEffect(() => {
+    if(!session || !supabase || isDemo) return
+    supabase.from('stash_notification_preferences').select('email_enabled').eq('user_id',session.user.id).maybeSingle().then(({data})=>{if(data)setEmailEnabled(Boolean(data.email_enabled))})
+  },[session,isDemo])
+  const saveEmailPreference = async (enabled:boolean) => {
+    setEmailEnabled(enabled)
+    if(!supabase || !session || isDemo){setNotice('Sign in to save email reminder preferences.');return}
+    const {error}=await supabase.from('stash_notification_preferences').upsert({user_id:session.user.id,email_enabled:enabled,reminder_days:leadDays},{onConflict:'user_id'})
+    if(error){setEmailEnabled(!enabled);setNotice(error.message)}else setNotice(enabled?'Email reminders enabled.':'Email reminders disabled.')
+  }
+  const sendEmailReminders = async () => {
+    if(!supabase || !session || isDemo){setNotice('Sign in to use email reminders.');return}
+    setBusy(true);const {data,error}=await supabase.functions.invoke('send-reminders');setBusy(false)
+    setNotice(error?error.message:(data?.sent?data.sent+' reminder email(s) sent.':'No reminders due, or email provider is not configured.'))
+  }
+  const testBankSandbox = async () => {
+    if(!supabase || !session || isDemo){setBankResult('Sign in to test the bank sandbox.');return}
+    setBusy(true);const {data,error}=await supabase.functions.invoke('banklink-sandbox',{body:{}});setBusy(false)
+    setBankResult(error?error.message:JSON.stringify(data).slice(0,1200))
+  }
   useEffect(() => {
     let active = true
     fetch('https://api.frankfurter.app/latest?from=ZAR&to=USD,GBP,EUR')
@@ -87,7 +112,8 @@ export default function PersonalExtras({subscriptions,budgets,displayCurrency,le
       <p>STASH can show browser notifications for upcoming payments and trial end dates while the app is open.</p>
       <button type="button" className="primary" onClick={() => void requestNotifications()}>{permission==='granted'?'Browser notifications enabled':'Enable browser notifications'}</button>
       {notice && <p className="hub-message">{notice}</p>}
-      <p className="hub-footnote">Background push and scheduled email notifications still need a notification provider and server-side scheduler.</p>
+      <label className="hub-toggle"><input type="checkbox" checked={emailEnabled} onChange={e=>void saveEmailPreference(e.target.checked)}/> Email payment and trial reminders</label><button type="button" onClick={()=>void sendEmailReminders()} disabled={busy}>Send due email reminders</button><p className="hub-footnote">Email delivery requires a Resend API key and verified sender configured securely in Supabase. The button checks reminders when pressed; automatic daily scheduling still needs setup.</p>
     </section>
+    <section className="hub-card"><h3>Bank connection (sandbox)</h3><p>Test STASH's bank-data integration using synthetic sample accounts only. This does not connect a real bank account.</p><button type="button" onClick={()=>void testBankSandbox()} disabled={busy}>Test bank sandbox</button>{bankResult&&<pre className="hub-code">{bankResult}</pre>}<p className="hub-footnote">Requires a test-only Banklink key configured as a Supabase secret. Real bank connections are not enabled in this build.</p></section>
   </div>
 }
