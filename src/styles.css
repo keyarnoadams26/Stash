@@ -603,3 +603,29 @@ body{
 .home-category-track span{display:block;height:100%;min-width:3px;border-radius:20px}
 .kpi-number-green{color:#087b45!important}
 @media(max-width:600px){.category-filter{margin-top:10px;justify-content:space-between}.category-filter select{max-width:58%}.home-category-card{padding:16px}}
+
+/* Distinct visual identity for each STASH membership tier */
+.brand-plan-lockup{display:flex;align-items:center;gap:9px;min-width:0}
+.sidebar-brand{display:flex;align-items:center;gap:9px;margin-bottom:3px}
+.plan-badge{display:inline-flex;align-items:center;justify-content:center;padding:4px 8px;border-radius:999px;font-size:9px;line-height:1;font-weight:900;letter-spacing:.11em;white-space:nowrap;border:1px solid transparent}
+.plan-badge-free{background:#edf1f5;color:#566477;border-color:#dce3eb}
+.plan-badge-plus{background:#e4f3ff;color:#1261a5;border-color:#b7ddfb}
+.plan-badge-premium{background:linear-gradient(120deg,#fff0c2,#ffe0a0);color:#80500b;border-color:#e8bd62;box-shadow:0 2px 8px #c28a2626}
+.plan-grid .plan-card{position:relative;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
+.plan-grid .plan-card:hover{transform:translateY(-3px)}
+.plan-grid .plan-card:not(.premium-card){border-top:5px solid #9aa6b5;background:linear-gradient(180deg,#f7f9fc 0%,#fff 34%)}
+.plan-grid .plan-card:nth-child(2){border-top-color:#2586d8;background:linear-gradient(180deg,#edf7ff 0%,#fff 42%)}
+.plan-grid .plan-card.premium-card{border:2px solid #d9a83c;border-top:6px solid #d9a83c;background:linear-gradient(155deg,#fff8e7 0%,#fff 48%,#fffaf0 100%);box-shadow:0 12px 32px #b9822020}
+.plan-grid .plan-card:nth-child(1) h3{color:#59677a}
+.plan-grid .plan-card:nth-child(2) h3{color:#126bb5}
+.plan-grid .plan-card.premium-card h3{color:#93600c}
+.plan-grid .plan-card:nth-child(1) .plan-price{color:#344256}
+.plan-grid .plan-card:nth-child(2) .plan-price{color:#126bb5}
+.plan-grid .plan-card.premium-card .plan-price{color:#94610b}
+.plan-grid .plan-card:nth-child(1) .plan-action{background:#64748b;color:#fff}
+.plan-grid .plan-card:nth-child(2) .plan-action{background:#1678c8;color:#fff}
+.plan-grid .plan-card.premium-card .plan-action,.plan-grid .plan-card.premium-card .premium-action{background:linear-gradient(100deg,#bd8520,#e0ad43);color:#fff;border:0}
+.plan-grid .plan-card.plan-current{outline:3px solid #0f2740;outline-offset:2px}
+.plan-grid .plan-card.plan-current:after{content:'YOUR CURRENT PLAN';position:absolute;top:13px;right:13px;padding:5px 8px;border-radius:20px;background:#102b46;color:#fff;font-size:8px;font-weight:900;letter-spacing:.08em}
+.plan-grid .plan-card.premium-card .plan-ribbon{background:#d9a83c;color:#352307}
+@media(max-width:600px){.brand-plan-lockup{gap:7px}.plan-badge{font-size:8px;padding:4px 7px}.sidebar-brand{gap:7px}}
