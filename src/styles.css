@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800;900&display=swap');
 :root{font-family:'DM Sans',sans-serif;color:#101216;background:#fff;font-synthesis:none;text-rendering:optimizeLegibility}*{box-sizing:border-box}body{margin:0;min-width:320px;min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}
 .wordmark{font:800 44px/.95 Manrope,sans-serif;letter-spacing:-3px;color:#050607}.eyebrow{font-size:10px;letter-spacing:2px;font-weight:700;color:#87909e;margin:0 0 13px}.muted{color:#7b8492;font-size:13px}
 .auth-shell{min-height:100svh;display:grid;place-items:center;position:relative;overflow:hidden;background:#fff;padding:25px 18px}.auth-decoration{position:absolute;pointer-events:none;border-radius:50%;background:#f0f1f4;transform:rotate(-28deg)}.auth-decoration.top{width:500px;height:180px;right:-210px;top:-115px}.auth-decoration.bottom{width:900px;height:210px;left:-240px;bottom:-155px;background:#e8eaee}.auth-decoration.bottom:after{content:"";position:absolute;width:420px;height:145px;left:-35px;bottom:0;background:#061d36;border-radius:50%;transform:rotate(8deg)}.auth-card{position:relative;z-index:1;width:min(100%,580px);padding:46px 42px 40px;background:rgba(255,255,255,.96);border:1px solid #eceef1;border-radius:30px;box-shadow:0 10px 34px #0b1b2d18}.auth-brand{margin:0 0 50px;padding-left:4px}.auth-brand .wordmark{font-size:76px;letter-spacing:-6px}.auth-brand p{font:500 17px Manrope;color:#293447;margin:8px 0 0}.auth-content h1{font:800 34px/1.15 Manrope;letter-spacing:-1.3px;margin:0 0 8px}.auth-subtitle{font-size:17px;color:#263347;margin:0 0 30px}.auth-form{display:grid;gap:14px}.field{height:64px;border:1.5px solid #d9dbe0;border-radius:20px;display:flex;align-items:center;gap:15px;padding:0 19px;color:#090d12;background:#fff}.field:focus-within{border-color:#142b47;box-shadow:0 0 0 3px #142b4710}.field svg{width:21px;flex-shrink:0}.field input{border:0;outline:0;min-width:0;flex:1;background:transparent;color:#16191f;font-size:16px}.field input::placeholder{color:#777b83}.visibility{border:0;background:transparent;padding:3px;display:grid}.form-utility{display:flex;justify-content:space-between;align-items:center;margin:1px 2px 7px;color:#172235;font-size:15px}.form-utility label{display:flex;align-items:center;gap:9px}.form-utility input{width:19px;height:19px;accent-color:#061d36}.text-button{border:0;background:transparent;color:#071f3b;font-size:15px;font-weight:700;padding:0}.primary{height:58px;border:0;border-radius:32px;background:#061d36;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;gap:12px;padding:0 22px}.primary:disabled{opacity:.6}.auth-submit{height:68px;font-size:19px;margin-top:4px}.or-divider{display:flex;align-items:center;gap:13px;margin:24px 0 18px;color:#17191d;font-size:16px}.or-divider span{height:1px;background:#d7d9de;flex:1}.google-button{height:64px;width:100%;border:1.5px solid #16191d;border-radius:32px;background:white;color:#11151b;font-weight:600;display:flex;align-items:center;justify-content:center;gap:14px;font-size:17px}.google-g{font:800 24px Arial;color:#4285f4}.auth-switch{text-align:center;color:#344052;font-size:15px;margin:38px 0 0}.notice,.error{padding:11px 13px;border-radius:10px;font-size:12px;line-height:1.5;margin:0 0 15px}.notice{display:flex;gap:8px;background:#edf5ef;color:#28633d}.error{background:#fff0ef;color:#a23b35}
@@ -340,4 +340,66 @@ body{background:#f6f7f9}
  .spending-card{margin-bottom:4px}
  .summary-card{grid-template-columns:1fr;align-content:start}
  .main-content{padding-left:48px;padding-right:48px}
+}
+
+
+/* STASH stronger typography and richer interface details */
+:root{font-weight:500}
+body{font-weight:500;letter-spacing:-.12px}
+h1,h2,h3,h4,.page-header h1,.section-heading h2,.section-title,.chart-heading h2{font-weight:900!important;letter-spacing:-.75px}
+p{line-height:1.55}
+button{font-weight:700}
+.wordmark{font-weight:900}
+.eyebrow,.welcome-kicker{font-weight:900;letter-spacing:2.2px}
+.page-header h1{font-size:31px;letter-spacing:-1.2px}
+.page-header p{font-weight:600}
+.spending-card{border-left:4px solid #173b60}
+.spending-card small{font-weight:800;letter-spacing:.1px}
+.spending-card strong{font-weight:900;font-size:34px;letter-spacing:-1.5px}
+.spending-card span{font-weight:800}
+.summary-card{border-bottom:3px solid #e5ebf2}
+.summary-card small{font-weight:800}
+.summary-card strong{font-weight:900;letter-spacing:-1px}
+.section-heading h2,.section-title{font-weight:900!important}
+.section-heading button{font-weight:800}
+.subscription-info b{font-size:15px;font-weight:900}
+.subscription-info small{font-weight:600}
+.subscription-row>strong{font-weight:900}
+.filter-pills button{font-weight:800}
+.filter-pills button.chosen{outline:2px solid #d8e2ed;outline-offset:2px}
+.analytics-stat small,.analytics-stat strong,.chart-unit{font-weight:900}
+.chart-heading h2{font-weight:900!important}
+.chart-heading p{font-weight:600}
+.setting-row{font-weight:750}
+.notification-page h2,.profile-page h2{font-weight:900!important}
+.toggle-row{font-weight:750}
+.primary,.plan-action{font-weight:900;letter-spacing:.1px}
+.bottom-nav small{font-weight:800}
+.service-icon{font-weight:900}
+.tip-card{font-weight:700}
+.feature-panel-title{font-weight:900}
+.welcome-content h1{font-weight:900;letter-spacing:-2.5px}
+.welcome-brand{font-weight:900}
+.welcome-benefits b{font-weight:900}
+.welcome-benefits small{font-weight:600}
+.auth-content h1{font-weight:900}
+.auth-submit{font-weight:900}
+.search-field input,.field input{font-weight:600}
+.search-field:focus-within{border-color:#173b60;box-shadow:0 0 0 3px #173b6012}
+.summary-card:after{content:"";position:absolute;right:-20px;bottom:-30px;width:88px;height:88px;border-radius:50%;background:#edf2f7;opacity:.75}
+.summary-card>*{position:relative;z-index:1}
+.subscription-row:hover{background:linear-gradient(90deg,#f8fafc,transparent);border-radius:12px}
+.chart-card:hover,.feature-panel:hover{box-shadow:0 13px 30px #10243b10!important}
+.plan-card{border-radius:23px}
+.plan-card h3{font-weight:900}
+.plan-price{font-weight:900;letter-spacing:-1px}
+.plan-card li{font-weight:600}
+@media(max-width:700px){
+ .page-header h1{font-size:27px}
+ .spending-card strong{font-size:29px}
+ .summary-card strong{font-size:25px}
+ .subscription-info b{font-size:14px}
+ .section-heading h2{font-size:17px}
+ .bottom-nav small{font-size:9px;font-weight:900}
+ .welcome-content h1{font-size:clamp(38px,10vw,52px)}
 }
