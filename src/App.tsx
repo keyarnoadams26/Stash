@@ -19,7 +19,7 @@ export default function App() {
  const [mode,setMode]=useState<Mode>('login'),[name,setName]=useState(''),[email,setEmail]=useState(''),[password,setPassword]=useState(''),[confirm,setConfirm]=useState(''),[show,setShow]=useState(false),[remember,setRemember]=useState(true)
  const [busy,setBusy]=useState(false),[notice,setNotice]=useState(''),[error,setError]=useState('')
  const [tab,setTab]=useState<Tab>('Home'),[items,setItems]=useState<Subscription[]>([]),[filter,setFilter]=useState<'All'|'Active'|'Cancelled'>('All'),[query,setQuery]=useState(''),[modal,setModal]=useState(false)
- const [subName,setSubName]=useState(''),[price,setPrice]=useState(''),[currency,setCurrency]=useState('ZAR'),[paymentDate,setPaymentDate]=useState(today())
+ const [subName,setSubName]=useState(''),[price,setPrice]=useState(''),[currency,setCurrency]=useState(()=>localStorage.getItem('stash-currency')||'ZAR'),[paymentDate,setPaymentDate]=useState(today())
  const [reminders,setReminders]=useState([true,true,false,false])
  const [demoPlan,setDemoPlan]=useState<'free'|'plus'|'premium'>('free')
  const [planNotice,setPlanNotice]=useState('')
