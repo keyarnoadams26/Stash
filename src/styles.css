@@ -629,3 +629,32 @@ body{
 .plan-grid .plan-card.plan-current:after{content:'YOUR CURRENT PLAN';position:absolute;top:13px;right:13px;padding:5px 8px;border-radius:20px;background:#102b46;color:#fff;font-size:8px;font-weight:900;letter-spacing:.08em}
 .plan-grid .plan-card.premium-card .plan-ribbon{background:#d9a83c;color:#352307}
 @media(max-width:600px){.brand-plan-lockup{gap:7px}.plan-badge{font-size:8px;padding:4px 7px}.sidebar-brand{gap:7px}}
+
+
+/* Distinct category colours used beside each subscription */
+.category-chip{display:inline-flex!important;align-items:center;width:max-content;padding:4px 9px!important;border-radius:999px!important;font-size:10px!important;font-weight:800!important;line-height:1.2;border:1px solid transparent!important}
+.category-entertainment{background:#fce8ef!important;color:#a92755!important;border-color:#f5c4d5!important}
+.category-music{background:#e8e5ff!important;color:#5542b8!important;border-color:#cec7ff!important}
+.category-software{background:#e1efff!important;color:#175ea8!important;border-color:#b9d8fb!important}
+.category-storage{background:#dff5f2!important;color:#08796d!important;border-color:#b4e6de!important}
+.category-gaming{background:#f1e5ff!important;color:#773bb1!important;border-color:#dec3fa!important}
+.category-education{background:#fff1d9!important;color:#9b5b08!important;border-color:#f4d8a6!important}
+.category-health{background:#e3f6e9!important;color:#16743d!important;border-color:#bce7c9!important}
+.category-other{background:#edf1f5!important;color:#566477!important;border-color:#dce3eb!important}
+/* Ranked most-spent category chart */
+.most-spent-card{display:grid;gap:17px}
+.most-spent-pill{padding:5px 9px;border-radius:999px;background:#e2f6e9;color:#087b45;font-size:9px;font-weight:900;letter-spacing:.08em}
+.most-spent-feature{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border:1px solid #bde7cb;border-radius:15px;background:linear-gradient(110deg,#eaf9ef,#f7fcf8)}
+.most-spent-feature>div{display:grid;gap:5px}
+.most-spent-feature small{color:#527460;font-size:11px;font-weight:700}
+.most-spent-feature strong{color:#087b45;font-size:19px;font-weight:900}
+.most-spent-feature>b{color:#087b45;font-size:18px;font-weight:900}
+.most-spent-bars{display:grid;gap:15px}
+.most-spent-row{display:grid;gap:7px}
+.most-spent-label{display:flex;align-items:center;gap:9px;color:#30435b;font-size:12px}
+.most-spent-label b{flex:1}
+.most-spent-label strong{color:#10243b;font-size:12px}
+.most-spent-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.most-spent-track{height:10px;overflow:hidden;border-radius:999px;background:#edf1f6}
+.most-spent-track span{display:block;height:100%;min-width:3px;border-radius:999px}
+@media(max-width:600px){.most-spent-feature{padding:13px}.most-spent-feature strong{font-size:16px}.most-spent-feature>b{font-size:15px}}
