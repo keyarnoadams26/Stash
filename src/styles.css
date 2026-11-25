@@ -105,3 +105,48 @@
 .demo-banner button{border:0;background:transparent;color:#071d36;font-weight:700;font-size:12px;text-decoration:underline}
 .demo-label{font-size:9px;letter-spacing:1px;color:#071d36;font-weight:800}
 @media(max-width:700px){.demo-banner{font-size:10px;padding:10px}.demo-banner button{font-size:10px;white-space:nowrap}}
+
+
+/* STASH subscription plans and feature access */
+.ad-placeholder{display:flex;flex-direction:column;gap:5px;min-height:74px;padding:13px 16px;margin:0 0 16px;border:1px dashed #cbd0d8;border-radius:14px;background:#f7f8fa;color:#596474}
+.ad-placeholder small{font-size:9px;letter-spacing:1.4px;font-weight:800;color:#8992a0}
+.ad-placeholder b{font-size:12px;font-weight:600}
+.plans-page{max-width:1050px;margin:0 auto}
+.plans-intro{margin-bottom:22px}
+.plans-intro h2{font:800 28px Manrope;margin:8px 0}
+.plans-intro p{font-size:13px;color:#697382;margin:0}
+.current-plan{display:inline-flex;gap:6px;align-items:center;margin-top:15px;padding:9px 13px;border-radius:20px;background:#edf1f6;color:#34445a;font-size:12px}
+.plan-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;align-items:stretch}
+.plan-card{position:relative;display:flex;flex-direction:column;padding:22px 18px;border:1px solid #e1e5eb;border-radius:19px;background:#fff;min-width:0}
+.plan-card.plan-current{border:2px solid #163453;box-shadow:0 7px 24px #0a203510}
+.plan-card h3{display:flex;align-items:center;gap:8px;font:800 19px Manrope;margin:0 0 12px;color:#111923}
+.plan-price{font:800 29px Manrope;letter-spacing:-1px;color:#071d34}
+.plan-price small{font:500 11px 'DM Sans',sans-serif;letter-spacing:0;color:#7b8492}
+.plan-card>p{font-size:12px;line-height:1.5;color:#707987;min-height:36px;margin:8px 0 15px}
+.plan-card ul{list-style:none;padding:0;margin:0 0 16px;display:grid;gap:11px;flex:1}
+.plan-card li{display:flex;align-items:flex-start;gap:8px;font-size:11px;line-height:1.4;color:#303b4b}
+.plan-card li svg{flex-shrink:0;color:#24486e}
+.plan-ad-note{display:flex;align-items:center;gap:7px;margin:0 0 13px;padding:9px 10px;border-radius:10px;background:#fff7e8;color:#94600c;font-size:11px;font-weight:700}
+.plan-ad-note.included{background:#eef4f9;color:#23496d}
+.plan-action{width:100%;min-height:45px;border:0;border-radius:24px;background:#071d34;color:white;font-size:12px;font-weight:700}
+.plan-action.secondary-action{background:#eef0f3;color:#1b2b40}
+.premium-card{background:#f5f8fc;border-color:#8298b6;padding-top:30px}
+.premium-card h3{color:#102b4b}
+.plan-ribbon{position:absolute;top:0;left:0;right:0;padding:7px 10px;border-radius:16px 16px 0 0;background:#1d3858;color:#fff;text-align:center;font-size:9px;font-weight:800;letter-spacing:.8px}
+.premium-card .plan-price{color:#102b4b}
+.premium-action{background:#17395f}
+.trial-note{display:block;margin-top:9px;text-align:center;font-size:9px;line-height:1.5;color:#6b7787}
+.commission-note,.plan-security-note{font-size:11px;line-height:1.6;color:#687383;margin:17px 2px 0}
+.plan-security-note{margin-top:7px}
+.plan-pill{margin-left:auto;padding:4px 8px;border-radius:12px;background:#edf1f6;color:#244365;font-size:9px;font-weight:800}
+.locked-panel{display:flex;align-items:center;gap:13px;margin-top:18px;padding:17px;border:1px solid #dbe2eb;border-radius:15px;background:#f6f8fb;color:#193756}
+.locked-panel>div{flex:1}
+.locked-panel b{font-size:13px}
+.locked-panel p{font-size:11px;line-height:1.5;color:#657184;margin:5px 0 0}
+.locked-panel .primary{height:39px;padding:0 15px;font-size:11px;white-space:nowrap}
+.feature-panel{margin-top:13px;padding:16px;border:1px solid #e5e9ef;border-radius:15px;background:#fff}
+.feature-panel-title{display:flex;align-items:center;gap:8px;font:700 13px Manrope;color:#132c49}
+.feature-panel p{font-size:11px;line-height:1.5;color:#697382;margin:8px 0}
+.coming-soon{font-size:9px;font-weight:700;letter-spacing:.3px;color:#73839a}
+@media(max-width:900px){.plan-grid{grid-template-columns:1fr 1fr}.premium-card{grid-column:span 2}}
+@media(max-width:700px){.plans-intro h2{font-size:24px}.plan-grid{grid-template-columns:1fr;gap:12px}.premium-card{grid-column:auto}.plan-card{padding:20px 17px}.premium-card{padding-top:31px}.locked-panel{flex-wrap:wrap}.locked-panel>div{min-width:180px}.locked-panel .primary{width:100%}}
