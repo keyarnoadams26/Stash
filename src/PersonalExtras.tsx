@@ -17,10 +17,21 @@ export default function PersonalExtras({subscriptions,budgets,displayCurrency,le
   const [bankResult,setBankResult] = useState('')
   const [busy,setBusy] = useState(false)
   const [pushEnabled,setPushEnabled] = useState(false)
+  const [priceOffers,setPriceOffers] = useState<any[]>([])
+  const [priceLoadMessage,setPriceLoadMessage] = useState('Loading verified provider offers…')
   useEffect(() => {
     if(!session || !supabase || isDemo) return
     supabase.from('stash_notification_preferences').select('email_enabled,push_enabled').eq('user_id',session.user.id).maybeSingle().then(({data})=>{if(data){setEmailEnabled(Boolean(data.email_enabled));setPushEnabled(Boolean(data.push_enabled))}})
   },[session,isDemo])
+  useEffect(() => {
+    if(!supabase) return
+    supabase.from('stash_price_comparisons').select('id,category,provider,plan,price,currency,billing_period,region,source_url,verified_at').eq('active',true).order('verified_at',{ascending:false}).limit(50)
+      .then(({data,error}) => {
+        if(error){setPriceLoadMessage('Price catalogue is not available yet.');return}
+        setPriceOffers(data||[])
+        setPriceLoadMessage(data?.length?'Offers supplied to STASH. Check the source and date before switching.':'No verified provider prices have been added yet.')
+      })
+  },[])
   const saveEmailPreference = async (enabled:boolean) => {
     setEmailEnabled(enabled)
     if(!supabase || !session || isDemo){setNotice('Sign in to save email reminder preferences.');return}
@@ -117,8 +128,9 @@ export default function PersonalExtras({subscriptions,budgets,displayCurrency,le
       <p className="hub-footnote">Conversion rates are reference rates from {rateDate || 'the latest available update'}. If rates cannot load, comparisons in other currencies may be incomplete.</p>
     </section>
     <section className="hub-card">
-      <h3>Cheaper alternatives</h3>
-      <p>These are ideas to investigate, not live price comparisons. Check current prices, local availability and features before switching.</p>
+      <h3>Cheaper alternatives and price comparisons</h3>
+      <p>Prices below are shown only when a verified offer has been added to the STASH catalogue. Availability and plan features can vary by country.</p>
+      {priceOffers.length ? <div className="recommendation-list">{priceOffers.map(offer=><div className="recommendation-row" key={offer.id}><b>{offer.provider} · {offer.plan}</b><span>{offer.category} · {offer.region||'Region not specified'}</span><strong>{offer.currency} {offer.price} / {offer.billing_period}</strong><small>Last verified: {offer.verified_at?new Date(offer.verified_at).toLocaleDateString():'Not recorded'} · <a href={offer.source_url} target="_blank" rel="noreferrer">Check provider source</a></small></div>)}</div>:<p className="muted">{priceLoadMessage}</p>}
       <div className="recommendation-list">
         <div className="recommendation-row"><b>Music subscriptions</b><span>Compare Spotify, Apple Music and YouTube Music</span><small>Check student, family and free plan options.</small></div>
         <div className="recommendation-row"><b>Video streaming</b><span>Compare Netflix, Disney+ and Prime Video</span><small>Consider rotating services instead of keeping several at once.</small></div>
