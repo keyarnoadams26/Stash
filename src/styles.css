@@ -528,3 +528,10 @@ body{
 .service-logo{position:relative;overflow:hidden;background:#fff!important;color:#142b45!important;border:1px solid #e3e8ef;box-shadow:0 4px 12px #10243b12}
 .service-logo>span{font-size:17px;font-weight:900;line-height:1}
 .service-logo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:7px;background:#fff;z-index:2}
+
+
+/* Stronger contrast for the subscription spending pie chart */
+.insights-dashboard .pie-chart{border:3px solid #26384d;box-shadow:0 0 0 1px #ffffff35,0 12px 28px #0008}
+.insights-dashboard .pie-legend-row .pie-swatch{width:13px;height:13px;border:2px solid #f8fafc;border-radius:4px;box-shadow:0 0 0 1px #0008;flex-shrink:0}
+.insights-dashboard .pie-legend-row{color:#f1f5f9}
+.insights-dashboard .pie-legend-row b,.insights-dashboard .pie-legend-row strong{color:#fff}
