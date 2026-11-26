@@ -753,3 +753,12 @@ body,.app-shell{background:var(--stash-paper);color:var(--stash-onyx-soft)}
 .primary:hover,.welcome-cta:hover,.auth-submit:hover{
  filter:brightness(1.08);
 }
+
+
+/* STASH update: welcome metrics, home recommendations and modern navigation */
+.welcome-benefits>div>span{width:46px;height:46px;min-width:46px;display:grid;place-items:center;border-radius:14px;font-size:18px;font-weight:900;letter-spacing:.02em;background:#e8eef4;color:#004A6B}
+.welcome-benefits>div{gap:15px}.welcome-benefits>div p{gap:4px}
+.dashboard-kpi strong{font-size:clamp(25px,2.3vw,34px)!important;line-height:1.08;letter-spacing:-.04em}
+.cheaper-recommendations-card{margin-top:18px}.cheaper-recommendations-card .section-heading{align-items:center}.cheaper-recommendations-card .section-heading>svg{color:#004A6B}.cheaper-recommendations-card .primary{margin-top:8px}
+.page-header-spacer{display:block;width:1px;height:1px}
+@media(max-width:700px){.bottom-nav{border-radius:25px!important;background:rgba(255,255,255,.97)!important}.bottom-nav button.active{background:#e6edf4!important;color:#004A6B!important;box-shadow:none!important}.bottom-nav button{transition:background .16s ease,color .16s ease}.main-content{touch-action:pan-y}.dashboard-kpi strong{font-size:25px!important}}
