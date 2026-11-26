@@ -728,3 +728,28 @@ body,.app-shell{background:var(--stash-paper);color:var(--stash-onyx-soft)}
 .plan-grid .plan-card.plan-current:after{background:#00638E!important}
 .auth-decoration.bottom:after{background:var(--stash-brand-gradient)!important}
 .auth-submit{background:var(--stash-brand-gradient)!important}
+
+
+/* STASH signature branding gradient — applied to the brand itself */
+.wordmark,.welcome-brand{
+ background:linear-gradient(105deg,#000000 0%,#004A6B 34%,#00638E 68%,#8CB9CC 100%)!important;
+ background-clip:text!important;
+ -webkit-background-clip:text!important;
+ color:transparent!important;
+ -webkit-text-fill-color:transparent!important;
+}
+.welcome-brand span{
+ background:linear-gradient(105deg,#004A6B,#00638E,#8CB9CC)!important;
+ background-clip:text!important;
+ -webkit-background-clip:text!important;
+ color:transparent!important;
+ -webkit-text-fill-color:transparent!important;
+}
+.primary,.welcome-cta,.auth-submit,
+.insights-dashboard .locked-panel .primary{
+ background:linear-gradient(105deg,#000000 0%,#004A6B 34%,#00638E 68%,#8CB9CC 100%)!important;
+ color:#fff!important;border:0!important;
+}
+.primary:hover,.welcome-cta:hover,.auth-submit:hover{
+ filter:brightness(1.08);
+}
