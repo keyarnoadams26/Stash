@@ -819,3 +819,23 @@ body,.app-shell{background:#fff!important;color:#141414!important}
 .most-spent-feature{background:linear-gradient(110deg,#BFD8E3,#f6fbfd)!important;border-color:#8CB9CC!important}
 .tip-card,.hub-message{background:#edf6f9!important;color:#004A6B!important;border:1px solid #BFD8E3!important}
 .modal{border:1px solid #BFD8E3!important;box-shadow:0 20px 70px rgba(0,74,107,.20)!important}
+
+/* STASH dashboard hierarchy and floating navigation refinement */
+.dashboard-kpi strong{font-size:clamp(25px,2.6vw,32px);letter-spacing:-.8px}
+.home-recommendation-card{display:flex;align-items:flex-start;gap:15px;padding:21px;border:1px solid #dfe7f0;border-radius:20px;background:#f8fafc;box-shadow:0 8px 22px #10182808}
+.recommendation-icon{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border-radius:14px;background:#e8eef6;color:#17395f}
+.recommendation-copy{min-width:0}
+.recommendation-copy .eyebrow{font-size:9px;letter-spacing:1.3px}
+.recommendation-copy h2{margin:5px 0 6px;font:800 17px Manrope,sans-serif;color:#14273d}
+.recommendation-copy p{margin:0 0 12px;color:#6e7b8c;font-size:12px;line-height:1.6}
+.recommendation-copy button{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;padding:0;color:#17395f;font-size:12px;font-weight:800}
+@media(max-width:700px){
+ .app-shell{padding-bottom:96px}
+ .bottom-nav{position:fixed;z-index:20;left:50%;right:auto;bottom:calc(10px + env(safe-area-inset-bottom));transform:translateX(-50%);width:min(94%,500px);height:66px;padding:5px 8px;background:#fff;border:1px solid #e7ebf0;border-radius:24px;box-shadow:0 10px 32px #10182820;display:flex;justify-content:space-around;align-items:center;gap:4px}
+ .bottom-nav button{height:54px;min-width:0;flex:1;border:0;border-radius:17px;background:transparent;color:#7b8492;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+ .bottom-nav button.active{background:#e9eff6;color:#17395f}
+ .bottom-nav button.active svg{stroke-width:2.5}
+ .bottom-nav small{font-size:10px;font-weight:700}
+ .dashboard-kpi strong{font-size:clamp(25px,7vw,31px)}
+ .home-recommendation-card{padding:17px;gap:12px}
+}
