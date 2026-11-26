@@ -25,11 +25,11 @@ export default function App() {
  const [legalAccepted,setLegalAccepted]=useState(false)
  const [mode,setMode]=useState<Mode>('login'),[name,setName]=useState(''),[email,setEmail]=useState(''),[password,setPassword]=useState(''),[confirm,setConfirm]=useState(''),[show,setShow]=useState(false),[remember,setRemember]=useState(true)
  const [busy,setBusy]=useState(false),[notice,setNotice]=useState(''),[error,setError]=useState('')
- const [tab,setTab]=useState<Tab>('Home'),[items,setItems]=useState<Subscription[]>([]),[filter,setFilter]=useState<'All'|'Active'|'Cancelled'>('All'),[query,setQuery]=useState(''),[modal,setModal]=useState(false)
+ const [tab,setTab]=useState<Tab>('Home'),[items,setItems]=useState<Subscription[]>([]),[modal,setModal]=useState(false)
  const touchStartX=useRef<number|null>(null)
  const swipeTabs:Tab[]=['Home','Subs','Payments','Insights','Profile']
  function handleSwipeEnd(endX:number){const start=touchStartX.current;touchStartX.current=null;if(start===null||Math.abs(endX-start)<65)return;const current=swipeTabs.indexOf(tab);if(current<0)return;const next=current+(endX<start?1:-1);if(next>=0&&next<swipeTabs.length)setTab(swipeTabs[next])}
- const [subName,setSubName]=useState(''),[price,setPrice]=useState(''),[category,setCategory]=useState('Entertainment'),[categoryFilter,setCategoryFilter]=useState('All'),[currency,setCurrency]=useState(()=>localStorage.getItem('stash-currency')||'ZAR'),[paymentDate,setPaymentDate]=useState(today())
+ const [subName,setSubName]=useState(''),[price,setPrice]=useState(''),[category,setCategory]=useState('Entertainment'),[currency,setCurrency]=useState(()=>localStorage.getItem('stash-currency')||'ZAR'),[paymentDate,setPaymentDate]=useState(today())
  const [reminders,setReminders]=useState([true,true,false,false])
  const [demoPlan,setDemoPlan]=useState<'free'|'plus'|'premium'>('free')
  const [planNotice,setPlanNotice]=useState('')
